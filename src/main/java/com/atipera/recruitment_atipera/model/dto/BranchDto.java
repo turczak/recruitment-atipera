@@ -1,4 +1,4 @@
-package com.atipera.recruitment_atipera.dto;
+package com.atipera.recruitment_atipera.model.dto;
 
 public record BranchDto(String name, String lastCommitSha) {
 }

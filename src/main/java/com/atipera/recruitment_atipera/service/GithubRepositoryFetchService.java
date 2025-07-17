@@ -1,23 +1,24 @@
 package com.atipera.recruitment_atipera.service;
 
-import com.atipera.recruitment_atipera.dto.BranchDto;
-import com.atipera.recruitment_atipera.dto.BranchResponse;
-import com.atipera.recruitment_atipera.dto.RepositoryDto;
-import com.atipera.recruitment_atipera.dto.RepositoryResponse;
 import com.atipera.recruitment_atipera.exception.UserNotFoundException;
+import com.atipera.recruitment_atipera.model.dto.BranchDto;
+import com.atipera.recruitment_atipera.model.dto.RepositoryDto;
+import com.atipera.recruitment_atipera.model.response.BranchResponse;
+import com.atipera.recruitment_atipera.model.response.RepositoryResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Objects;
 
-@org.springframework.stereotype.Service
+@Service
 @AllArgsConstructor
-public class Service {
+public class GithubRepositoryFetchService {
 
     private final RestTemplate restTemplate;
 
@@ -28,7 +29,7 @@ public class Service {
                     url,
                     HttpMethod.GET,
                     null,
-                    new ParameterizedTypeReference<>() {
+                    new ParameterizedTypeReference<List<RepositoryResponse>>() {
                     }
             );
             List<RepositoryResponse> repositories = Objects.requireNonNull(response.getBody());
@@ -36,7 +37,7 @@ public class Service {
                     .filter(repository -> !repository.fork())
                     .map(repository -> {
                         List<BranchDto> branches = getBranches(username, repository.name());
-                        return new RepositoryDto(repository.name(), repository.owner().login(), branches);
+                        return new RepositoryDto(repository.name(), repository.ownerDto().login(), branches);
                     })
                     .toList();
         } catch (RestClientException exception) {
@@ -53,12 +54,12 @@ public class Service {
                 url,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<>() {
+                new ParameterizedTypeReference<List<BranchResponse>>() {
                 }
         );
         List<BranchResponse> responseBody = Objects.requireNonNull(response.getBody());
         return responseBody.stream()
-                .map(branch -> new BranchDto(branch.name(), branch.commit().sha()))
+                .map(branch -> new BranchDto(branch.name(), branch.commitDto().sha()))
                 .toList();
     }
 

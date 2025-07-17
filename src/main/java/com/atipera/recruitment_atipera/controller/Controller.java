@@ -1,7 +1,7 @@
 package com.atipera.recruitment_atipera.controller;
 
-import com.atipera.recruitment_atipera.dto.RepositoryDto;
-import com.atipera.recruitment_atipera.service.Service;
+import com.atipera.recruitment_atipera.model.dto.RepositoryDto;
+import com.atipera.recruitment_atipera.service.GithubRepositoryFetchService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Controller {
 
-    private final Service service;
+    private final GithubRepositoryFetchService service;
 
     @GetMapping("/{username}")
     public ResponseEntity<List<RepositoryDto>> getUserRepositories(
