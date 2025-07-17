@@ -1,4 +1,4 @@
-package com.atipera.recruitment_atipera;
+package com.atipera.recruitment_atipera.dto;
 
 import java.util.List;
 
