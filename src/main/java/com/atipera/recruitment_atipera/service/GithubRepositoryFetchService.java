@@ -13,17 +13,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
+import java.util.function.Predicate;
 
 @Service
 @AllArgsConstructor
 public class GithubRepositoryFetchService {
 
+    private static final String REPOSITORIES_URL = "https://api.github.com/users/%s/repos";
+    private static final String BRANCHES_URL = "https://api.github.com/repos/%s/%s/branches";
+
+
     private final RestTemplate restTemplate;
 
     public List<RepositoryDto> getNonForkRepositories(String username) {
-        String url = String.format("https://api.github.com/users/%s/repos", username);
+        String url = String.format(REPOSITORIES_URL, username);
         try {
             ResponseEntity<List<RepositoryResponse>> response = restTemplate.exchange(
                     url,
@@ -32,12 +37,15 @@ public class GithubRepositoryFetchService {
                     new ParameterizedTypeReference<List<RepositoryResponse>>() {
                     }
             );
-            List<RepositoryResponse> repositories = Objects.requireNonNull(response.getBody());
+            List<RepositoryResponse> repositories = response.getBody();
+            if (repositories == null) {
+                return Collections.emptyList();
+            }
             return repositories.stream()
-                    .filter(repository -> !repository.fork())
+                    .filter(Predicate.not(RepositoryResponse::fork))
                     .map(repository -> {
                         List<BranchDto> branches = getBranches(username, repository.name());
-                        return new RepositoryDto(repository.name(), repository.ownerDto().login(), branches);
+                        return new RepositoryDto(repository.name(), repository.owner().login(), branches);
                     })
                     .toList();
         } catch (RestClientException exception) {
@@ -47,7 +55,7 @@ public class GithubRepositoryFetchService {
 
     private List<BranchDto> getBranches(String username, String repositoryName) {
         String url = String.format(
-                "https://api.github.com/repos/%s/%s/branches",
+                BRANCHES_URL,
                 username,
                 repositoryName);
         ResponseEntity<List<BranchResponse>> response = restTemplate.exchange(
@@ -57,9 +65,12 @@ public class GithubRepositoryFetchService {
                 new ParameterizedTypeReference<List<BranchResponse>>() {
                 }
         );
-        List<BranchResponse> responseBody = Objects.requireNonNull(response.getBody());
-        return responseBody.stream()
-                .map(branch -> new BranchDto(branch.name(), branch.commitDto().sha()))
+        List<BranchResponse> branches = response.getBody();
+        if (branches == null) {
+            return Collections.emptyList();
+        }
+        return branches.stream()
+                .map(branch -> new BranchDto(branch.name(), branch.commit().sha()))
                 .toList();
     }
 
