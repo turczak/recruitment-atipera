@@ -1,7 +1,7 @@
 package com.atipera.recruitment_atipera.controller;
 
-import com.atipera.recruitment_atipera.Service;
 import com.atipera.recruitment_atipera.dto.RepositoryDto;
+import com.atipera.recruitment_atipera.service.Service;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
