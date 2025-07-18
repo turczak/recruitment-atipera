@@ -43,7 +43,7 @@ Using maven:
 3. Access the API
 
 The service will start on port 8080 by default.<br>
-Example request to fetch repositories for user `**turczak**`:
+Example request to fetch repositories for user `turczak`:
 
 ```
 curl --request GET \
