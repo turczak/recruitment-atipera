@@ -1,0 +1,74 @@
+[
+  {
+    "name": "AoC2015",
+    "ownerLogin": "turczak",
+    "branches": [
+      {
+        "name": "day22",
+        "lastCommitSha": "6619377dfe1029c767ed37798b2c98cef7395c91"
+      },
+      {
+        "name": "day23",
+        "lastCommitSha": "0e355748f6b509bd5197e9ca53e5417b25bb235c"
+      },
+      {
+        "name": "main",
+        "lastCommitSha": "a9a35f3c876f7051651ec8e6e27a26bbfff5bd7d"
+      }
+    ]
+  },
+  {
+    "name": "Battleship",
+    "ownerLogin": "turczak",
+    "branches": [
+      {
+        "name": "main",
+        "lastCommitSha": "52eea21f392f88d770e4564fab1b89e4130e000d"
+      }
+    ]
+  },
+  {
+    "name": "Flex",
+    "ownerLogin": "turczak",
+    "branches": [
+      {
+        "name": "main",
+        "lastCommitSha": "aa5273c94c6448486e9a3a3a7ea62253caea8608"
+      }
+    ]
+  },
+  {
+    "name": "Prawko",
+    "ownerLogin": "turczak",
+    "branches": [
+      {
+        "name": "config",
+        "lastCommitSha": "39f4cccc0873addca03dc30fbcd2ecb066d5857a"
+      },
+      {
+        "name": "master",
+        "lastCommitSha": "f2333413c0212423c7f7e8b8e4ecf6e1b48f4a1e"
+      }
+    ]
+  },
+  {
+    "name": "recruitment-atipera",
+    "ownerLogin": "turczak",
+    "branches": [
+      {
+        "name": "main",
+        "lastCommitSha": "e6d5ed24b6941971e61291c715a60ad9155977c5"
+      }
+    ]
+  },
+  {
+    "name": "WP_projekt",
+    "ownerLogin": "turczak",
+    "branches": [
+      {
+        "name": "master",
+        "lastCommitSha": "b84ea6a84b8b1a142acb99a7d8619de22fffbc24"
+      }
+    ]
+  }
+]
